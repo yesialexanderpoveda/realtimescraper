@@ -20,13 +20,15 @@ app.use(router);
 app.use("/static", express.static("./index.html"));
 //http://localhost:8080/static
 io.on('connection', async (socket) => {
+
  
+  console.log(socket.id)
   await scraper.open();
-  await scraper.giveDta();
+  await scraper.giveDta(socket); 
   
-  console.log('connect socket client', socket.id)
   
-socket.emit('news', { hello: 'world' }); 
+  
+
 
 });
 
