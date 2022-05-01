@@ -4,9 +4,11 @@ import http from "http";
 import { Server } from "socket.io";
 
 // import router
-
 import router from "./routes/routes.js";
 
+// import excraper 
+
+import scraper from "./scraper/scraper.js";
 const app = express();
 const htttpServer = http.createServer(app);
 
@@ -16,9 +18,12 @@ app.use(cors());
 app.use(router);
 
 app.use("/static", express.static("./index.html"));
-
-io.on('connection', (socket) => {
+//http://localhost:8080/static
+io.on('connection', async (socket) => {
  
+  await scraper.open();
+  await scraper.giveDta();
+  
   console.log('connect socket client', socket.id)
   
 socket.emit('news', { hello: 'world' }); 
